@@ -12,7 +12,7 @@ COPY templates /app/templates
 RUN pip install flask matplotlib pymongo apscheduler
 
 # Exponiere den Port, auf dem die Anwendung läuft
-EXPOSE 8080
+EXPOSE 5000
 
 # Starte die Anwendung beim Start des Containers
 CMD ["python", "app.py"]
