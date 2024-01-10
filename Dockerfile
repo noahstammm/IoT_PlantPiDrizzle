@@ -1,5 +1,5 @@
 # Verwende ein Basisimage mit Python und Flask-Abhängigkeiten
-FROM python:3.8-slim
+FROM python:3.10.0
 
 # Setze das Arbeitsverzeichnis im Container
 WORKDIR /app
@@ -15,4 +15,5 @@ RUN pip install flask matplotlib pymongo apscheduler
 EXPOSE 5000
 
 # Starte die Anwendung beim Start des Containers
-CMD ["python", "app.py"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
+
