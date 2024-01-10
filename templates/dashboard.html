@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pflanzen Dashboard</title>
     <style>
+        /* Dein vorhandener CSS-Stil bleibt unverändert */
         body {
-            background-color: #eaf7e9; /* Hellgrüner Hintergrund */
+            background-color: #eaf7e9;
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 20px;
         }
 
         h1 {
-            color: #4c7845; /* Dunkelgrüne Überschrift */
+            color: #4c7845;
         }
 
         .warning-container {
@@ -23,17 +24,17 @@
         }
 
         .warning-bar {
-            background-color: #ff7f7f; /* Roter Hintergrund für den Warnungsbalken */
-            border-radius: 5px; /* Abgerundete Ecken */
-            margin-top: 10px; /* Abstand zum Diagramm */
-            padding: 10px; /* Innenabstand des Balkens */
-            width: 400px; /* Breite des Balkens */
+            background-color: #ff7f7f;
+            border-radius: 5px;
+            margin-top: 10px;
+            padding: 10px;
+            width: 400px;
         }
 
         img {
             max-width: 100%;
-            border-radius: 10px; /* Abgerundete Ecken für das Diagramm */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichte Schatten */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
 
@@ -44,7 +45,7 @@
         }
 
         li {
-            background-color: #c5e1a5; /* Hellgrüner Hintergrund für Meldungen */
+            background-color: #c5e1a5;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -62,5 +63,19 @@
     </div>
 </div>
 {% endif %}
+
+
+<button id="myButton" onclick="callServerFunction()">Klick mich!</button>
+
+<script>
+    function callServerFunction() {
+        // Verwende Ajax, um eine Anfrage an den Server zu senden
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/trigger_server_function", true);
+        alert("Dim Pflänzli ghat wieder guet.")
+        xhr.send();
+    }
+</script>
+
 </body>
 </html>
