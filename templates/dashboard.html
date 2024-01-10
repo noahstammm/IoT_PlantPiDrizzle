@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pflanzen Dashboard</title>
+    <style>
+        body {
+            background-color: #eaf7e9; /* Hellgrüner Hintergrund */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #4c7845; /* Dunkelgrüne Überschrift */
+        }
+
+        .warning-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .warning-bar {
+            background-color: #ff7f7f; /* Roter Hintergrund für den Warnungsbalken */
+            border-radius: 5px; /* Abgerundete Ecken */
+            margin-top: 10px; /* Abstand zum Diagramm */
+            padding: 10px; /* Innenabstand des Balkens */
+            width: 400px; /* Breite des Balkens */
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 10px; /* Abgerundete Ecken für das Diagramm */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichte Schatten */
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background-color: #c5e1a5; /* Hellgrüner Hintergrund für Meldungen */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Dashboard</h1>
+<img src="{{ plot_url }}" alt="Feuchtigkeitsdiagramm">
+
+{% if warning_message %}
+<div class="warning-container">
+    <div class="warning-bar">
+        <p style="margin: 0;">{{ warning_message }}</p>
+    </div>
+</div>
+{% endif %}
+</body>
+</html>
