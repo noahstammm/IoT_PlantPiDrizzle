@@ -46,4 +46,4 @@ dashboard.html: Die HTML-Vorlage für das Frontend des Dashboards. Zeigt das Feu
 Die Anwendung verwendet einen Hintergrund-Scheduler, um die Daten periodisch aus der MongoDB abzurufen und das Diagramm zu aktualisieren. Standardmäßig wird alle 60 Sekunden aktualisiert, aber dies kann in der get_data_periodically Funktion in der app.py Datei angepasst werden.
 
 # Hinweis
-Dieses Projekt ist nur als Beispiel gedacht und kann je nach den spezifischen Anforderungen angepasst werden. Es wird empfohlen, die Anwendung gemäß den eigenen Bedürfnissen zu erweitern und zu verbessern.
+Dieses Projekt ist nur als Beispiel gedacht und kann je nach den spezifischen Anforderungen angepasst werden. Es wird empfohlen, die Anwendung gemäß den eigenen Bedürfnissen zu erweitern und zu verbessern. Ebenfalls enthält dieses Projekt ein Dockerfile, womit ein Image erstellt werden kann und es anschliessend in einem Docker Container laufen gelassen und deployed werden kann.
