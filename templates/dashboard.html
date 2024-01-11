@@ -50,10 +50,31 @@
             margin-bottom: 10px;
             border-radius: 5px;
         }
+
+        .watering-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #c5e1a5;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .watering-time {
+            font-weight: bold;
+            color: #4c7845;
+        }
+
     </style>
 </head>
 <body>
 <h1>Dashboard</h1>
+
+
+<div class="watering-info">
+    <p>Dein Pflänzli wurde das letzte Mal am <span class="watering-time">{{ latest_watering }}</span> gegossen.</p>
+</div>
+
+
 <img src="{{ plot_url }}" alt="Feuchtigkeitsdiagramm">
 
 {% if warning_message %}
@@ -65,17 +86,7 @@
 {% endif %}
 
 
-<button id="myButton" onclick="callServerFunction()">Klick mich!</button>
 
-<script>
-    function callServerFunction() {
-        // Verwende Ajax, um eine Anfrage an den Server zu senden
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/trigger_server_function", true);
-        alert("Dim Pflänzli ghat wieder guet.")
-        xhr.send();
-    }
-</script>
 
 </body>
 </html>

@@ -14,20 +14,24 @@ app = Flask(__name__)
 mongo_uri = 'mongodb+srv://janosi:1234@cluster.lp4msmq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 db_name = 'IoT'
 collection_name = 'Cluster'
+collection_name2 = 'message'
 
 # Verbindung zur MongoDB herstellen
 client = MongoClient(mongo_uri)
 db = client[db_name]
 collection = db[collection_name]
+collection2 = db[collection_name2]
 
 # Zwischengespeicherte Daten
-cached_data = {'timestamps': [], 'moisture_levels': []}
+cached_data = {'timestamps': [], 'moisture_levels': [], 'latest_watering': []}
 
 # Funktion zum Abrufen von Daten
 def get_data():
-    formatted_timestamps, moisture_levels = get_data_from_mongo()
+    formatted_timestamps, moisture_levels, latest_watering = get_data_from_mongo()
     cached_data['timestamps'] = formatted_timestamps
     cached_data['moisture_levels'] = moisture_levels
+    cached_data['latest_watering'] = latest_watering
+
 
 # Funktion zum periodischen Abrufen von Daten
 def get_data_periodically():
@@ -39,12 +43,13 @@ def index():
     get_data()  # Daten sofort abrufen
     plot_url, warning_message = create_plot(cached_data['timestamps'], cached_data['moisture_levels'])
 
-    return render_template('dashboard.html', plot_url=plot_url, warning_message=warning_message)
+    return render_template('dashboard.html', plot_url=plot_url, warning_message=warning_message, latest_watering=cached_data['latest_watering'])
 
 # Scheduler für die periodische Aktualisierung
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=get_data_periodically, trigger='interval', seconds=60)  # Aktualisiere alle 60 Sekunden
 scheduler.start()
+
 
 def get_data_from_mongo():
     cursor = collection.find().sort('timestamp', -1).limit(10)
@@ -73,7 +78,21 @@ def get_data_from_mongo():
         timestamps.append(timestamp)
         moisture_levels.append(average_moisture)
 
-    return timestamps, moisture_levels
+    # Den neuesten Eintrag aus der MongoDB-Sammlung abrufen
+    latest_entry = collection2.find_one(sort=[("timestamp", -1)])
+
+    # Extrahiere das Timestamp-Feld
+    timestamp = latest_entry.get("timestamp")
+
+    # Konvertiere den Unix-Zeitstempel in ein normales Datumsformat
+    timestamp_datetime = datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=datetime.timezone.utc)
+
+    # Formatieren des Datums im gewünschten Format
+    latest_watering = timestamp_datetime.strftime('%Y-%m-%d %H:%M')
+    print('watering', latest_watering)
+
+
+    return timestamps, moisture_levels, latest_watering
 
 
 
@@ -81,14 +100,14 @@ def create_plot(timestamps, values):
     fig, ax = plt.subplots(figsize=(15, 6))
 
     # Färbe die Punkte rot, wenn moisture_level gleich 0 ist
-    colors = ['red' if value == 0 else 'blue' for value in values]
+    colors = ['red' if value == 0 else 'green' for value in values]
 
     # Invertiere die Achsen, um das neueste Datum rechts zu platzieren
     ax.invert_xaxis()
 
     # Zeichne eine Linie, die die Punkte verbindet
     for i in range(len(timestamps) - 1):
-        line_color = 'red' if values[i] == 0 else 'blue'
+        line_color = 'red' if values[i] == 0 else 'green'
         ax.plot([timestamps[i], timestamps[i + 1]], [values[i], values[i + 1]], marker='o', linestyle='-', color=line_color)
 
     # Füge die farbigen Punkte hinzu
@@ -120,11 +139,6 @@ def create_plot(timestamps, values):
     print('warning_message', warning_message)
 
     return f'data:image/png;base64,{plot_url}', warning_message
-
-
-
-
-
 
 
 if __name__ == '__main__':
