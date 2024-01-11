@@ -1,5 +1,5 @@
-### README.md
-## Pflanzen Dashboard
+# README.md
+# Pflanzen Dashboard
 Dieses Repository enthält eine einfache Webanwendung zur Überwachung des Feuchtigkeitsniveaus einer Pflanze. Die Anwendung basiert auf Flask für das Backend, Matplotlib für die Diagrammerstellung und MongoDB für die Speicherung von Daten. Das Frontend wird durch eine HTML-Vorlage (dashboard.html) bereitgestellt.
 
 # Voraussetzungen
